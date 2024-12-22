@@ -4,6 +4,7 @@ import MenuList from "../components/Menu/MenuList"
 
 const MenuPage = () => {
     const [currentItem, setCurrentItem] = useState(null);
+    const [refetch, setRefetch] = useState(false);
 
     const handleEdit = (item) => {
         setCurrentItem(item);
@@ -13,11 +14,14 @@ const MenuPage = () => {
         setCurrentItem(null);
     };
 
+    const onSuccess = () => {
+        setRefetch(!refetch);
+    }
+
     return (
         <div>
-            <h1>Menu Management</h1>
-            <MenuForm currentItem={currentItem} clearItem={clearItem} />
-            <MenuList onEdit={handleEdit} />
+            <MenuForm currentItem={currentItem} onSuccess={onSuccess} clearItem={clearItem} />
+            <MenuList onEdit={handleEdit} refetch={refetch} />
         </div>
     );
 };

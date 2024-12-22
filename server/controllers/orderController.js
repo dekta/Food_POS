@@ -3,9 +3,16 @@ const Order = require('../models/orderModel');
 // Create a new order
 const createOrder = async (req, res) => {
     try {
-        const { items, customerPhone } = req.body;
-        const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        const order = new Order({ items, customerPhone, totalPrice });
+        const { items, customerPhone, fullName, status, totalPrice } = req.body;
+        const lcTotalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        const order = new Order({
+            items,
+            customerPhone,
+            totalPrice: totalPrice ? totalPrice : lcTotalPrice,
+            fullName,
+            status
+        }
+        );
         await order.save();
         res.status(201).json(order);
     } catch (err) {
@@ -16,7 +23,10 @@ const createOrder = async (req, res) => {
 // Read all orders
 const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find();
+        const orders = await Order.find().populate({
+            path: 'items.menuItem',
+            model: 'MenuItem',
+        });;
         res.status(200).json(orders);
     } catch (err) {
         res.status(500).json({ error: 'Error fetching orders' });

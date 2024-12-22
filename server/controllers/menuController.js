@@ -2,6 +2,7 @@ const MenuItem = require('../models/menuItemModel');
 
 // Create a new menu item
 const createMenuItem = async (req, res) => {
+    
     try {
         const menuItem = new MenuItem(req.body);
         await menuItem.save();

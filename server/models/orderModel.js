@@ -9,7 +9,8 @@ const orderSchema = new mongoose.Schema({
     ],
     totalPrice: { type: Number, required: true },
     status: { type: String, enum: ['pending', 'completed'], default: 'pending' },
-    customerPhone: { type: String, required: true }
+    customerPhone: { type: String, required: true },
+    fullName: { type: String, required: true },
 });
 
 module.exports = mongoose.model('Order', orderSchema);

@@ -14,18 +14,16 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    console.log("stdout")
     try {
         const { email, password } = req.body;
-        console.log('email:', email)
-        console.log('password:', password)
         const user = await User.findOne({ email });
         console.log('user:', user);
         if (!user || !(await bcrypt.compare(password, user.password))) {
+            console.log("wrong")
             return res.status(401).json({ error: 'Invalid credentials' });
         }
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        res.json({ token, name: user?.name, role: user?.role });
     } catch (err) {
         console.log('err:', err)
         res.status(500).json({ error: 'Error logging in' });
