@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchMenuItems, deleteMenuItem } from '../../services/apiService';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Dialog, DialogContent, DialogTitle, FormControlLabel, IconButton, LinearProgress, Switch, Tooltip, Typography } from '@mui/material';
-import { ArrowDownward, ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline, EditOutlined } from '@mui/icons-material';
+import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline, EditOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { handleGetUser, handleTruncate } from '../../utils/helper';
 
@@ -16,7 +16,6 @@ const MenuList = ({ onEdit, refetch }) => {
     const isDelete = user?.isAdmin;
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
                 const { data } = await fetchMenuItems();
@@ -57,10 +56,9 @@ const MenuList = ({ onEdit, refetch }) => {
         setIsOpen(false);
     };
 
-
     return (
         <>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem", padding: "2rem" }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem", padding: "2rem", }}>
                 {menuItems.map((item) => (
                     <Card key={item._id} sx={{ maxWidth: 345 }}>
                         <CardMedia
@@ -100,7 +98,7 @@ const MenuList = ({ onEdit, refetch }) => {
 
                             <IconButton disabled={isEdit ? false : true} onClick={() => onEdit(item)}><EditOutlined /></IconButton>
                             <IconButton disabled={isEdit ? false : true} onClick={() => handleDelete(item?._id)}><DeleteOutline /></IconButton>
-                            <Button onClick={() => {
+                            <Button disabled={item?.isAvailable ? false : true} onClick={() => {
                                 setIsOpen(true);
                                 setClickedItem(item)
                             }} size="small">Add To Cart</Button>

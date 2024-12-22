@@ -14,6 +14,9 @@ const LoginForm = () => {
         setLoading(true);
         try {
             await loginUser(formData); // Call the login API
+            setTimeout(() => {
+                window.location.reload()
+            }, 500);
             navigate('/'); // Redirect to the menu page after login
         } catch (err) {
             setError('Login failed. Invalid email or password.');

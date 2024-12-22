@@ -8,14 +8,18 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import CheckoutPage from './pages/CheckoutPage';
 import Navbar from './components/Navbar';
 import { Box } from '@mui/material';
+import { handleGetUser } from './utils/helper';
 
 const App = () => {
+    const user = handleGetUser();
+    console.log('user:', user)
+
     return (
-        <Box sx={{display:"flex",flexDirection:"column"}}>
-            <Navbar />
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Navbar isLogout={user.isAdmin} />
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/register" element={<ProtectedRoute><RegisterPage /></ProtectedRoute>} />
                 <Route
                     path="/"
                     element={

@@ -96,7 +96,7 @@ const OrderList = () => {
 
     return (
         <>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem", }}>
                 {orders.map((order) => (
                     <Box key={order._id} sx={
                         {
@@ -136,7 +136,7 @@ const OrderList = () => {
                 }
                 <DialogTitle>Update Order</DialogTitle>
                 <DialogContent>
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", width: "500px" }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", width: "500px", }}>
                         <TextField
                             autoFocus
                             required

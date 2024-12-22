@@ -3,7 +3,7 @@ import OrderList from '../components/Orders/OrderList';
 
 const OrderPage = () => {
     return (
-        <div>
+        <div style={{ marginTop: "4rem" }}>
             <h1>Order Management</h1>
             <OrderList />
         </div>

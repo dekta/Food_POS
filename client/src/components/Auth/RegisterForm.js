@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../../services/apiService';
 import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input, InputLabel, LinearProgress, MenuItem, Select, TextField } from "@mui/material"
 
-const RegisterForm = () => {
+const RegisterForm = ({ isOpen, setIsOpen }) => {
     const [formData, setFormData] = useState({ name: '', email: '', password: '', role: '' });
     console.log('formData:', formData)
     const [error, setError] = useState('');
@@ -15,7 +15,8 @@ const RegisterForm = () => {
         setLoading(true);
         try {
             await registerUser(formData);
-            navigate('/'); // Redirect to the menu page after successful registration
+            // navigate('/'); // Redirect to the menu page after successful registration
+            setIsOpen(false);
         } catch (err) {
             setError('Registration failed. Please try again.');
         }
@@ -28,11 +29,17 @@ const RegisterForm = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    useEffect(() => {
+        return () => {
+            setFormData({});
+        }
+    }, [])
+
     return (
         <Box>
             <Dialog
-                open={true}
-                onClose={() => { }}
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
             >
                 {
                     loading && <LinearProgress />
@@ -96,8 +103,8 @@ const RegisterForm = () => {
                 <DialogActions>
                     <Button
                         variant='outlined'
-                        onClick={() => navigate("/login")}>
-                        Login
+                        onClick={() => setIsOpen(false)}>
+                        Cancel
                     </Button>
                     <Button
                         variant='contained'

@@ -99,7 +99,7 @@ const CheckoutPage = () => {
 
     return (
         <>
-            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100vh" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100vh", marginTop: "4rem" }}>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: "1rem", padding: "2rem", height: "80vh", overflow: 'hidden', overflowY: "auto" }}>
                     {localRecords.map((item) => (
                         <Card key={item._id} sx={{ width: 345, height: "fit-content" }}>

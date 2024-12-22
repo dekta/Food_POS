@@ -56,12 +56,15 @@ const MenuForm = ({ currentItem, clearItem, onSuccess, onLoading, onClose }) => 
 
     return (
         <>
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'space-between' }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'space-between', marginTop: "4rem" }}>
                 <Typography variant='h4'>Menu Management</Typography>
                 <Tooltip title="Add Menu">
-                    <IconButton sx={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={() => setIsOpen(true)}>
-                        <AddCircleOutlineOutlinedIcon fontSize='30px' />
-                    </IconButton>
+                    <Box sx={{ display: "flex", alignItems: "center", zIndex: "10", cursor: "default" }}>
+                        <IconButton sx={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={() => setIsOpen(true)}>
+                            <AddCircleOutlineOutlinedIcon fontSize='30px' />
+                        </IconButton>
+                        <Typography variant='h6'>Add Menu</Typography>
+                    </Box>
                 </Tooltip>
             </Box>
             <Dialog
