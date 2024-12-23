@@ -6,11 +6,12 @@ import { handleGetUser } from "../../utils/helper"
 
 const MenuForm = ({ currentItem, clearItem, onSuccess, onLoading, onClose }) => {
     const [formData, setFormData] = useState(currentItem || { name: '', price: '', isAvailable: true, category: 'veg', url: '', description: '' });
-    console.log('currentItem:', currentItem)
-    console.log('formData:', formData)
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const user = handleGetUser();
+    console.log("user",user)
+    const isEdit = user?.isAdmin || user?.accessType.includes('create');
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -60,7 +61,7 @@ const MenuForm = ({ currentItem, clearItem, onSuccess, onLoading, onClose }) => 
                 <Typography variant='h4'>Menu Management</Typography>
                 <Tooltip title="Add Menu">
                     <Box sx={{ display: "flex", alignItems: "center", zIndex: "10", cursor: "default" }}>
-                        <IconButton sx={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={() => setIsOpen(true)}>
+                        <IconButton disabled={isEdit ? false : true}  sx={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={() => setIsOpen(true)}>
                             <AddCircleOutlineOutlinedIcon fontSize='30px' />
                         </IconButton>
                         <Typography variant='h6'>Add Menu</Typography>

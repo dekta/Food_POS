@@ -61,7 +61,6 @@ const OrderList = () => {
             customerPhone: formData?.customerPhone,
             fullName: formData?.fullName,
         };
-        console.log('payload:', payload)
         try {
             await updateOrder(formData?._id, payload);
             localStorage.removeItem("POS_CART");

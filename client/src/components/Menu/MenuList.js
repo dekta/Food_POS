@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMenuItems, deleteMenuItem } from '../../services/apiService';
+import { fetchMenuItems, deleteMenuItem, updateMenuItem } from '../../services/apiService';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Dialog, DialogContent, DialogTitle, FormControlLabel, IconButton, LinearProgress, Switch, Tooltip, Typography } from '@mui/material';
 import { ArrowDownwardOutlined, ArrowUpwardOutlined, DeleteOutline, EditOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -12,8 +12,8 @@ const MenuList = ({ onEdit, refetch }) => {
     const [quantity, setQuantity] = useState(0);
     const [clickedItem, setClickedItem] = useState({ name: "", id: "" })
     const user = handleGetUser();
-    const isEdit = user?.isAdmin;
-    const isDelete = user?.isAdmin;
+    const isEdit = user?.isAdmin || user?.accessType.includes('update');
+    const isDelete = user?.isAdmin || user?.accessType.includes('delete');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,7 +22,6 @@ const MenuList = ({ onEdit, refetch }) => {
                 setMenuItems(data);
             }
             catch (err) {
-                console.log('err:', err)
                 if (err?.status === 401) {
                     navigate("/login")
                 }
@@ -54,6 +53,15 @@ const MenuList = ({ onEdit, refetch }) => {
         setClickedItem({});
         setQuantity(0);
         setIsOpen(false);
+    };
+
+    const handleChange = async (event, itemId) => {
+        const { checked } = event.target;
+        setMenuItems((prevItems) =>
+        prevItems.map((item) =>
+            item._id === itemId ? { ...item, isAvailable: checked } : item
+        )
+    );
     };
 
     return (
@@ -88,7 +96,7 @@ const MenuList = ({ onEdit, refetch }) => {
                                 control={
                                     <Switch
                                         checked={item?.isAvailable}
-                                        // onChange={handleChange}
+                                        onChange={(event) => handleChange(event, item._id)} 
                                         name='isAvailable'
                                         id='isAvailable'
                                     />
@@ -97,7 +105,7 @@ const MenuList = ({ onEdit, refetch }) => {
                             />
 
                             <IconButton disabled={isEdit ? false : true} onClick={() => onEdit(item)}><EditOutlined /></IconButton>
-                            <IconButton disabled={isEdit ? false : true} onClick={() => handleDelete(item?._id)}><DeleteOutline /></IconButton>
+                            <IconButton disabled={isDelete ? false : true} onClick={() => handleDelete(item?._id)}><DeleteOutline /></IconButton>
                             <Button disabled={item?.isAvailable ? false : true} onClick={() => {
                                 setIsOpen(true);
                                 setClickedItem(item)

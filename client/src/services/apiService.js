@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:8080/api', // Change this to your backend URL
+    baseURL: 'http://localhost:8080/api', 
 });
 
 // Attach token for protected routes
@@ -22,8 +22,8 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (userData) => {
     const { data } = await API.post('auth/login', userData);
-    localStorage.setItem('token', data.token); // Store token in localStorage
-    localStorage.setItem('user', JSON.stringify({ name: data?.name, role: data?.role, isAdmin: data?.role === "admin" ? true : false })); // Store token in localStorage
+    localStorage.setItem('token', data.token); 
+    localStorage.setItem('user', JSON.stringify({ name: data?.name, role: data?.role, isAdmin: data?.role === "admin" ? true : false ,accessType:data?.accessType})); // Store token in localStorage
     return data;
 };
 

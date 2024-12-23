@@ -12,7 +12,6 @@ import { handleGetUser } from './utils/helper';
 
 const App = () => {
     const user = handleGetUser();
-    console.log('user:', user)
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
