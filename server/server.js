@@ -12,7 +12,7 @@ const orderRoutes = require('./routes/orderRoutes');
 const app = express();
 // Allow requests from a specific origin
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://taupe-dodol-c14604.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
