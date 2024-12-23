@@ -95,7 +95,7 @@ const MenuList = ({ onEdit, refetch }) => {
         sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', padding: '2rem' }}
       >
         {menuItems.map((item) => (
-          <Card key={item._id} sx={{ maxWidth: 345 }}>
+          <Card key={item._id} sx={{ maxWidth: "345px",minWidth:"345px" }}>
             <CardMedia
               sx={{ height: 140 }}
               image={item?.url}
@@ -153,7 +153,7 @@ const MenuList = ({ onEdit, refetch }) => {
                   </IconButton>
                 </>
               )}
-              {isCustomer && (
+            
                 <Button
                   disabled={item?.isAvailable ? false : true}
                   onClick={() => {
@@ -164,7 +164,6 @@ const MenuList = ({ onEdit, refetch }) => {
                 >
                   Add To Cart
                 </Button>
-              )}
             </CardActions>
           </Card>
         ))}
