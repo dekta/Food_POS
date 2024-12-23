@@ -58,7 +58,7 @@ const MenuForm = ({ currentItem, clearItem, onSuccess, onLoading, onClose }) => 
     return (
         <>
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'space-between', marginTop: "4rem" }}>
-                <Typography variant='h4'>Menu Management</Typography>
+                <Typography variant='h5'>Menu Management</Typography>
                 <Tooltip title="Add Menu">
                     <Box sx={{ display: "flex", alignItems: "center", zIndex: "10", cursor: "default" }}>
                         <IconButton disabled={isEdit ? false : true}  sx={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={() => setIsOpen(true)}>

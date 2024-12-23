@@ -33,4 +33,21 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = { register, login };
+const customerRegister = async (req, res) => {
+    try {
+        const { name, email, password} = req.body;
+        const checkUser = await User.findOne({ email });
+        if(checkUser){
+            res.status(400).json({ error: 'User email already exists' });
+        }else{
+            console.log('customer',name, email, password)
+            const user = new User({ name, email, password, role:'customer'});
+            await user.save();
+            res.status(201).json({ message: 'User registered successfully' });
+        }
+    } catch (err) {
+        res.status(500).json({ error: 'Error registering user' });
+    }
+};
+
+module.exports = { register, login,customerRegister };

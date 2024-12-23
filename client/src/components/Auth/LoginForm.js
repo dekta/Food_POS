@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { loginUser, registerUser } from '../../services/apiService'
+import {
+  loginUser,
+  registerCustomer,
+  registerUser
+} from '../../services/apiService'
 import {
   Box,
   Button,
@@ -17,10 +21,15 @@ import {
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
+  const [registerData, setRegisterData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
   const [error, setError] = useState('')
   const navigate = useNavigate()
-  const [loginOrSignup, setLoginOrSignup] = useState('login')
   const [loading, setLoading] = useState(false)
+  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false)
 
   const handleLogin = async () => {
     setLoading(true)
@@ -37,15 +46,41 @@ const LoginForm = () => {
     }
   }
 
+  const handleRegister = async () => {
+    setLoading(true)
+    try {
+      console.log('registerData', registerData)
+      await registerCustomer(registerData) // Call the registration API
+      alert('Registration successful. Please log in.')
+      setIsRegisterDialogOpen(false)
+    } catch (err) {
+      setError('Registration failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const handleRegisterChange = e => {
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value })
+  }
+
+  const handleRegisterOpen = () => {
+    setIsRegisterDialogOpen(true)
+  }
+
+  const handleRegisterClose = () => {
+    setIsRegisterDialogOpen(false)
+  }
+
   return (
     <Box>
+      {/* Login Dialog */}
       <Dialog open onClose={() => {}}>
         {loading && <LinearProgress />}
-
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           <TextField
@@ -80,11 +115,63 @@ const LoginForm = () => {
             </p>}
         </DialogContent>
         <DialogActions>
-          {/* <Button variant='outlined' onClick={() => navigate('/register')}>
-            Register
-          </Button> */}
-          <Button variant='contained' onClick={() => handleLogin()}>
+          <Button variant='outlined' onClick={handleRegisterOpen}>
+            User Register
+          </Button>
+          <Button variant='contained' onClick={handleLogin}>
             {loading ? 'Loading...' : 'Login'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Register Dialog */}
+      <Dialog open={isRegisterDialogOpen} onClose={handleRegisterClose}>
+        <DialogTitle>User Registration</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            required
+            margin='dense'
+            id='name'
+            name='name'
+            label='Name'
+            type='text'
+            fullWidth
+            variant='standard'
+            value={registerData.name}
+            onChange={handleRegisterChange}
+          />
+          <TextField
+            required
+            margin='dense'
+            id='email'
+            name='email'
+            label='Email Address'
+            type='email'
+            fullWidth
+            variant='standard'
+            value={registerData.email}
+            onChange={handleRegisterChange}
+          />
+          <TextField
+            required
+            margin='dense'
+            id='password'
+            name='password'
+            label='Password'
+            type='password'
+            fullWidth
+            variant='standard'
+            value={registerData.password}
+            onChange={handleRegisterChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleRegisterClose} color='secondary'>
+            Cancel
+          </Button>
+          <Button variant='contained' color='primary' onClick={handleRegister}>
+            Register
           </Button>
         </DialogActions>
       </Dialog>

@@ -37,12 +37,12 @@ const RegisterForm = ({ isOpen, setIsOpen }) => {
     try {
       const transformedAccessType = Object.entries(formData.accessType)
             .filter(([key, value]) => value)
-            .map(([key]) => key); 
+            .map(([key]) => key);
+      transformedAccessType.push('read') 
       const payload = { ...formData, accessType: transformedAccessType };
       await registerUser(payload);
       setIsOpen(false);
     } catch (err) {
-      console.log("Myerr",err.response.data.error)
       const error = err?.response?.data?.error || 'Registration failed. Please try again.'
       setError(error);
     } finally {

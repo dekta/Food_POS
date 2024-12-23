@@ -36,3 +36,9 @@ export const fetchOrders = () => API.get('/orders');
 export const createOrder = (order) => API.post('/orders', order);
 export const updateOrder = (id, order) => API.put(`/orders/${id}`, order);
 export const deleteOrder = (id) => API.delete(`/orders/${id}`);
+
+export const registerCustomer = async (userData) => {
+    const { data } = await API.post('auth/register/customer', userData);
+    localStorage.setItem('token', data.token);
+    return data;
+};
