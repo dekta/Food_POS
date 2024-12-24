@@ -3,6 +3,7 @@ This project focuses on developing a scalable and user-friendly Point of Sale (P
 
 ## Table of Contents
 - [Features](#features)
+- [Deployment](#deployment)
 - [Installation](#installation)
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
@@ -66,6 +67,15 @@ This project focuses on developing a scalable and user-friendly Point of Sale (P
    - Pending: When the order is placed and awaiting processing.
    - Completed: When the order is fulfilled and delivered to the customer.
 
+## Deployment
+
+### Frontend
+- **Live Site**: https://food-pos-project.netlify.app
+- **Hosting Platform**: Netlify
+
+### Backend
+- **Live Site**: https://food-pos-evsg.onrender.com
+- **Hosting Platform**: Render
 
 ## Installation
 
