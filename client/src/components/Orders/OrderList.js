@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchOrders, deleteOrder, updateOrder } from '../../services/apiService';
+import { fetchOrders, deleteOrder, updateOrder, fetchCusOrders } from '../../services/apiService';
 import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton, InputLabel, LinearProgress, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { DeleteOutline, DeleteOutlined, EditOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { handleGetUser } from '../../utils/helper';
 
 const OrderList = () => {
     const [orders, setOrders] = useState([]);
+    const [cusOrders, setCusOrders] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({ fullName: '', customerPhone: '', status: '' });
@@ -14,12 +15,15 @@ const OrderList = () => {
     const user = handleGetUser();
     const isEdit = user?.isAdmin;
     const isDelete = user?.isAdmin;
+    const role = user?.role
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const { data } = await fetchOrders();
+                const { data: cusOrdersData } = await fetchCusOrders() 
                 setOrders(data);
+                setCusOrders(cusOrdersData || [])
             }
             catch (err) {
                 if (err?.status === 401) {
@@ -95,7 +99,29 @@ const OrderList = () => {
 
     return (
         <>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem", }}>
+            {role ==='customer' && (<Box sx={{ display: "flex", flexDirection: "column", gap: "2rem", }}>
+                {cusOrders.map((order) => (
+                    <Box key={order._id} sx={
+                        {
+                            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                            padding: "2rem",
+                            borderRadius: "10px",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center"
+                        }
+                    }>
+                        <Box>
+                            <Typography variant='h5'>{order?.fullName}</Typography>
+                            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                                <Typography variant='subtitle2'>Total</Typography>
+                                <Typography variant='subtitle2'>${order.totalPrice}</Typography>
+                            </Box>
+                        </Box>
+                    </Box>
+                ))}
+            </Box>)}
+            {role !=='customer' && (<Box sx={{ display: "flex", flexDirection: "column", gap: "2rem", }}>
                 {orders.map((order) => (
                     <Box key={order._id} sx={
                         {
@@ -123,7 +149,7 @@ const OrderList = () => {
                         </Box>
                     </Box>
                 ))}
-            </Box>
+            </Box>)}
             <Dialog
                 open={isOpen}
                 onClose={() => {

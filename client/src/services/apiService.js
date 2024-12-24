@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'https://food-pos-evsg.onrender.com/api', 
+    baseURL: 'http://localhost:8080/api', 
 });
 
 // Attach token for protected routes
@@ -36,6 +36,7 @@ export const fetchOrders = () => API.get('/orders');
 export const createOrder = (order) => API.post('/orders', order);
 export const updateOrder = (id, order) => API.put(`/orders/${id}`, order);
 export const deleteOrder = (id) => API.delete(`/orders/${id}`);
+export const fetchCusOrders = () => API.get(`/orders/cus`);
 
 export const registerCustomer = async (userData) => {
     const { data } = await API.post('auth/register/customer', userData);

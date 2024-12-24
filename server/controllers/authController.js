@@ -40,7 +40,6 @@ const customerRegister = async (req, res) => {
         if(checkUser){
             res.status(400).json({ error: 'User email already exists' });
         }else{
-            console.log('customer',name, email, password)
             const user = new User({ name, email, password, role:'customer'});
             await user.save();
             res.status(201).json({ message: 'User registered successfully' });

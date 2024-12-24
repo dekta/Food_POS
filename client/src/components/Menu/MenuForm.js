@@ -10,7 +10,6 @@ const MenuForm = ({ currentItem, clearItem, onSuccess, onLoading, onClose }) => 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const user = handleGetUser();
-    console.log("user",user)
     const isEdit = user?.isAdmin || user?.accessType.includes('create');
 
     const handleSubmit = async () => {

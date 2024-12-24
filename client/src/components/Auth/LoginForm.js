@@ -49,7 +49,6 @@ const LoginForm = () => {
   const handleRegister = async () => {
     setLoading(true)
     try {
-      console.log('registerData', registerData)
       await registerCustomer(registerData) // Call the registration API
       alert('Registration successful. Please log in.')
       setIsRegisterDialogOpen(false)

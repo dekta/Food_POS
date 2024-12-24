@@ -57,7 +57,6 @@ const updateMenuItem = async (req, res) => {
       }
       res.status(200).json(menuItem)
     } else {
-      console.log(accessType, role)
       res.status(400).json({ error: 'You do not have access to update' })
     }
   } catch (err) {

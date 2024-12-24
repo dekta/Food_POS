@@ -27,7 +27,6 @@ const RegisterForm = ({ isOpen, setIsOpen }) => {
     role: '',
     accessType: { create: false, update: false, delete: false },
   });
-  console.log('formData:', formData);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

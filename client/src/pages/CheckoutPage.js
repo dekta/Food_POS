@@ -65,7 +65,6 @@ const CheckoutPage = () => {
             customerPhone: formData?.customerPhone,
             fullName: formData?.fullName,
         };
-        console.log('payload:', payload)
         try {
             await createOrder(payload);
             localStorage.removeItem("POS_CART");
