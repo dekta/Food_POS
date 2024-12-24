@@ -11,7 +11,7 @@ const app = express()
 // Allow requests from a specific origin
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://food-pos-project.netlify.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   })
