@@ -61,7 +61,7 @@ const Navbar = ({ isLogout }) => {
           }}
         >
           {isLogout && (
-            <Tooltip title="Register User">
+            <Tooltip title="Register Staff">
               <IconButton
                 sx={{ color: 'black' }}
                 onClick={() => setIsOpen(true)}

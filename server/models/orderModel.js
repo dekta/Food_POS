@@ -9,9 +9,10 @@ const orderSchema = new mongoose.Schema({
   ],
   totalPrice: { type: Number, required: true },
   status: { type: String, enum: ['pending', 'completed'], default: 'pending' },
-  customerPhone: { type: String, required: true },
+  customerPhone: { type: String },
   fullName: { type: String, required: true },
-  customerId: { type: String, default:null }
+  customerId: { type: String, default: null },
+  createdAt: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model('Order', orderSchema)

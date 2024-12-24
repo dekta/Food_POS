@@ -78,6 +78,7 @@ const MenuList = ({ onEdit, refetch }) => {
     setClickedItem({});
     setQuantity(0);
     setIsOpen(false);
+    navigate('/');
   };
 
   const handleChange = async (event, itemId) => {
@@ -186,6 +187,7 @@ const MenuList = ({ onEdit, refetch }) => {
             <Button
               disabled={quantity === 0 ? true : false}
               onClick={() => setQuantity(quantity - 1)}
+
             >
               <ArrowDownwardOutlined />
             </Button>

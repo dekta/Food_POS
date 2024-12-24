@@ -58,7 +58,7 @@ This project focuses on developing a scalable and user-friendly Point of Sale (P
 ### Order Management Page
 **1. View Orders:**
 - Admins can see a detailed list of all orders placed by customers.
-- Each order displays information such as customer details, items ordered, quantities, total price, and order status.
+- Customers should only see orders associated with their user account.
 
 **2. Update Order Status:**
 - Admins can manage the order lifecycle by changing the status of an order.
@@ -93,10 +93,14 @@ This project focuses on developing a scalable and user-friendly Point of Sale (P
     - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Technologies Used
-
+### Frontend
 - **React**: A JavaScript library for building user interfaces.
 - **CSS Modules**: Scoped and modular styling for components.
 - **Local Storage**: For persisting workflow data across sessions.
+### Backend
+- **Node.js**: A JavaScript runtime used for building the backend of the application.
+- **Express.js**: A lightweight web framework for Node.js to handle HTTP requests and routing.
+- **MongoDB**: A NoSQL database used to store application data, offering flexible schema and scalability.
 
 
 ## Project Structure

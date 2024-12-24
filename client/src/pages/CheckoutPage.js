@@ -17,6 +17,8 @@ const CheckoutPage = () => {
     const navigate = useNavigate();
     const user = handleGetUser();
     const isDelete = user?.isAdmin;
+    const role =  user?.role
+    console.log("user", user)
 
     const handleRemove = (id) => {
         let localStorageData = JSON.parse(localStorage.getItem("POS_CART")) || []
@@ -82,6 +84,37 @@ const CheckoutPage = () => {
         }
     }
 
+     const handleDirectGenerateOrder = async () => {
+        setLoading(true)
+        const payload = {
+            items: localRecords?.map((item) => {
+                return {
+                    menuItem: item?._id,
+                    quantity: item?.quantity,
+                    price: item?.price
+                }
+            }),
+            totalPrice: totalAmount,
+            status: "pending",
+            customerPhone: null,
+            fullName: user?.name||"Unkonwn",
+        };
+        try {
+            await createOrder(payload);
+            localStorage.removeItem("POS_CART");
+            navigate("/orders");
+
+        }
+        catch (err) {
+            if (err?.status === 401) {
+                navigate("/login")
+            }
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         const localStorageData = JSON.parse(localStorage.getItem("POS_CART")) || []
         let localTotal = 0;
@@ -143,8 +176,13 @@ const CheckoutPage = () => {
                         <Typography variant='h6'>${totalAmount}</Typography>
                     </Box>
                     <Button variant='contained' onClick={() => {
-                        setIsCheckout(true);
-                        setIsOpen(true);
+                        if(role!=='customer'){
+                            setIsCheckout(true);
+                            setIsOpen(true);
+                        }else{
+                            handleDirectGenerateOrder()
+                            navigate("/orders");
+                        } 
                     }}>Generate Order</Button>
                 </footer>
             </Box>
